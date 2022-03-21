@@ -3,38 +3,28 @@ import Request, { PayloadType, EmptyObject } from "../../components/Request";
 
 export const HomePage = () => {
   const [req, setReq] = React.useState<PayloadType>();
-  const handleLoadRequestComp = (bag: PayloadType) => {
+  const handleLoadRequestComp = React.useCallback((bag: PayloadType) => {
     setReq(bag);
-  };
+  }, [])
 
   React.useEffect(() => {
-    if (req) {
-      req.handlers.callApi({
-        url: "/todos/1"
-      });
+    if (req?.state?.result && req?.state.result !== null) {
+      req.handlers.callApi();
     }
   }, [req]);
   return (
     <div>
       <Request
-        config={
-          {
-            baseURL: "https://jsonplaceholder.typicode.com",
-            timeout: 10000,
-            onLoad: handleLoadRequestComp,
-            Headers: {
-              "Content-type": "application/json"
-            }
-          } as EmptyObject
-        }
-        callOnMount
+        url="https://jsonplaceholder.typicode.com/todos/1"
+        timeout={10000}
+        onLoad={handleLoadRequestComp}
       >
-        {({ state: { loading, data } }) => (
+        {({ state: { loading, result } }) => (
           <div>
             {loading ? (
               <div>...loading</div>
             ) : (
-              <pre>{JSON.stringify(data, null, 2)}</pre>
+              <pre>{JSON.stringify(result, null, 2)}</pre>
             )}
           </div>
         )}
