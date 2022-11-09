@@ -4,8 +4,7 @@ import Example from "./containers/HomePage";
 export default function App() {
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      <h1>Hola Erubiel Apodaca</h1>
       <Example />
     </div>
   );
